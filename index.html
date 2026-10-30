@@ -1,0 +1,645 @@
+<!doctype html>
+<!--
+  Ahmed Mohamed · profile. Built with scroll-craft (typographic poster grammar).
+  Facts from a7med.cc. Text lives in the I18N dictionary below (English + Arabic).
+  The drone and the contour map are drawn in code: src/drone.js -> assets/js/drone.js.
+-->
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ahmed Mohamed · Abu Dhabi</title>
+<meta name="description" content="Ahmed Mohamed: developer from Abu Dhabi. Autonomous racing, hackathons, games, and two studios.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230A0C0F'/><rect x='11' y='13' width='10' height='7' rx='2' fill='%23EDEBE6'/><circle cx='8' cy='10' r='4' fill='none' stroke='%23FF6A2B' stroke-width='2'/><circle cx='24' cy='10' r='4' fill='none' stroke='%23FF6A2B' stroke-width='2'/></svg>">
+<script>try{var sw=/[?&]y=\d/.test(location.search)?1:null;if(sw!==null)document.documentElement.classList.add("lang-swap");if(sw===null&&!matchMedia("(prefers-reduced-motion: reduce)").matches&&!location.hash&&!(history.scrollRestoration&&scrollY>0))document.documentElement.classList.add("booting");setTimeout(function(){document.documentElement.classList.remove("booting")},2500)}catch(e){}</script>
+<link rel="stylesheet" href="scrollcraft.css">
+<style>
+  @font-face { font-family: "Archivo"; font-style: normal; font-weight: 100 900; font-stretch: 62% 125%;
+    font-display: swap; src: url(assets/fonts/archivo-latin-wdth-normal.woff2) format("woff2-variations"); }
+  @font-face { font-family: "Geist"; font-weight: 400; font-display: swap; src: url(assets/fonts/geist-latin-400-normal.woff2) format("woff2"); }
+  @font-face { font-family: "Geist"; font-weight: 500; font-display: swap; src: url(assets/fonts/geist-latin-500-normal.woff2) format("woff2"); }
+  @font-face { font-family: "Alexandria"; font-weight: 100 900; font-display: swap; src: url(assets/fonts/alexandria-arabic-wght-normal.woff2) format("woff2-variations"); }
+
+  :root {
+    --sc-canvas:     #0A0C0F;
+    --sc-surface:    #12151A;
+    --sc-ink:        #EDEBE6;
+    --sc-ink-soft:   #A4A9B0;
+    --sc-accent:     #FF6A2B;
+    --sc-accent-ink: #0A0C0F;
+    --sc-font-display: "Archivo", "Alexandria", system-ui, sans-serif;
+    --sc-font-text:    "Geist", "Alexandria", system-ui, sans-serif;
+  }
+  html:lang(ar) {
+    --sc-font-display: "Alexandria", "Archivo", system-ui, sans-serif;
+    --sc-font-text:    "Alexandria", "Geist", system-ui, sans-serif;
+  }
+  html:lang(ar) * { letter-spacing: 0 !important; }
+  html:lang(ar) .morning .prose p, html:lang(ar) .timetable p, html:lang(ar) .studio p, html:lang(ar) .reel-item .sub { line-height: 1.9; }
+  html:lang(ar) .timetable h3, html:lang(ar) .hero-meta strong { font-weight: 600; }
+
+  html, body { overflow-x: clip; }
+  html { background: var(--sc-canvas); }
+  body { background: var(--sc-canvas); color: var(--sc-ink); letter-spacing: 0.005em; }
+
+  /* ---------- the flight (signature move): fixed 3D layer behind every act ---------- */
+  #flight { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; display: block;
+    opacity: 0; transition: opacity 900ms var(--sc-ease-out); }
+  .has-flight #flight { opacity: 1; }
+  main { position: relative; z-index: 1; }
+
+  .chrome { position: fixed; z-index: var(--sc-z-chrome); top: 0; left: 0; right: 0;
+    display: flex; justify-content: space-between; align-items: baseline; gap: var(--sc-4);
+    padding: var(--sc-5) var(--sc-gutter); font: 500 var(--sc-t-sm)/1 var(--sc-font-text); pointer-events: none; }
+  .chrome a, .chrome button { pointer-events: auto; }
+  .mark { font: 700 var(--sc-t-base)/1 "Archivo", sans-serif; font-stretch: 112%; letter-spacing: -0.02em; text-decoration: none; direction: ltr; }
+  .chrome__trail { display: flex; gap: var(--sc-5); align-items: baseline; }
+  .lang { font: inherit; color: inherit; background: none; border: 0; padding: var(--sc-2) 0; cursor: pointer;
+    border-bottom: 1px solid color-mix(in oklab, currentColor 40%, transparent); transition: border-color 140ms var(--sc-ease-out); }
+  @media (hover: hover) and (pointer: fine) { .lang:hover { border-bottom-color: currentColor; } }
+  .lang:active { transform: translateY(1px); }
+
+  a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.22em; }
+  .link { text-decoration-line: underline; text-decoration-color: var(--sc-accent); text-decoration-thickness: 2px;
+    transition: text-decoration-thickness 140ms var(--sc-ease-out), color 140ms var(--sc-ease-out); }
+  @media (hover: hover) and (pointer: fine) { .link:hover { text-decoration-thickness: 4px; } }
+  .link:active { transform: translateY(1px); }
+  :focus-visible { outline: 2px solid var(--sc-accent); outline-offset: 4px; border-radius: 2px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .num { font-family: "Archivo", sans-serif; font-variant-numeric: tabular-nums; }
+  .hl { color: var(--sc-accent); }
+
+  .name { margin: 0; white-space: nowrap; font-family: var(--sc-font-display); font-weight: 820; font-stretch: 112%;
+    letter-spacing: -0.05em; line-height: 0.8; font-size: 18vw; }
+  html:lang(ar) .name { font-weight: 800; line-height: 1.1; }
+
+  /* ---------- 1 · hero: contour map (back), drone (mid), name (front) ---------- */
+  .hero .stand { position: absolute; left: 0; right: 0; bottom: 21svh; z-index: 2; display: flex; justify-content: center;
+    transform-origin: 50% 100%; transform: translateY(calc(var(--sc-p, 0) * -6svh)) scale(calc(1 - var(--sc-p, 0) * 0.08)); }
+  .hero-meta { position: absolute; z-index: 3; left: var(--sc-gutter); right: var(--sc-gutter); bottom: var(--sc-7);
+    transform: translateY(calc(var(--sc-p, 0) * 4svh)); }
+  .hero-meta__in { display: flex; justify-content: space-between; align-items: end; gap: var(--sc-5);
+    padding-top: var(--sc-4); border-top: 1px solid var(--sc-hairline-strong); font: 500 var(--sc-t-lg)/1.35 var(--sc-font-text); }
+  .hero-meta p { margin: 0; max-width: 40ch; }
+  .hero-meta strong { font-weight: 500; display: block; }
+  .hero-meta .role { color: var(--sc-ink-soft); }
+  .hero-meta .where { white-space: nowrap; color: var(--sc-ink-soft); }
+
+  /* ---------- language swap: fade out, reload in the other language, fade in ---------- */
+  body { transition: opacity 220ms var(--sc-ease-out); }
+  .lang-swap body, body.leaving { opacity: 0; }
+
+  /* ---------- hero portrait in characters ---------- */
+  .hero .ascii, #ascii2 { aspect-ratio: 0.9375; }
+  .hero .ascii { position: absolute; z-index: 1; inset-inline-end: calc(var(--sc-gutter) * 0.5); bottom: 0; height: 88svh; display: block;
+    transform: translateY(calc(var(--sc-p, 0) * -4svh)); opacity: calc(1 - var(--sc-p, 0) * 0.55);
+    -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 96%); mask-image: linear-gradient(to bottom, #000 62%, transparent 96%); }
+
+  /* ---------- take-off intro + propwash letters ---------- */
+  .ch { display: inline-block; transition: opacity 700ms var(--sc-ease-out), transform 1100ms var(--sc-ease-out);
+    transition-delay: calc(700ms + var(--i) * 85ms); }
+  .chi { display: inline-block; will-change: transform; }
+  .booting .ch { opacity: 0; transform: translateY(0.45em) scale(0.92); transition: none; }
+  .hero-meta, .chrome { transition: opacity 800ms var(--sc-ease-out) 1500ms; }
+  .booting .hero-meta, .booting .chrome { opacity: 0; transition: none; }
+
+  /* ---------- LiDAR scan reveal on the record ---------- */
+  .timetable { position: relative; }
+  .scan { clip-path: inset(0 100% 0 0); }
+  [dir="rtl"] .scan { clip-path: inset(0 0 0 100%); }
+  .scan.on { clip-path: inset(0 0 0 0); transition: clip-path 900ms var(--sc-ease-out); }
+  .scanline { position: absolute; left: 0; width: 2px; background: var(--sc-accent); pointer-events: none; z-index: 2; }
+  .scanline::after { content: ""; position: absolute; top: 0; bottom: 0; right: 2px; width: 90px;
+    background: linear-gradient(to right, transparent, color-mix(in oklab, var(--sc-accent) 22%, transparent)); }
+  [dir="rtl"] .scanline::after { right: auto; left: 2px; background: linear-gradient(to left, transparent, color-mix(in oklab, var(--sc-accent) 22%, transparent)); }
+
+  /* ---------- 2 · morning ---------- */
+  .morning { padding-block: var(--sc-10) var(--sc-section); }
+  .morning h2 { font: 760 var(--sc-t-3xl)/var(--sc-leading-tight) var(--sc-font-display); font-stretch: 104%;
+    letter-spacing: var(--sc-track-tight); margin: 0 0 var(--sc-6); max-width: 14ch; text-wrap: balance; }
+  html:lang(ar) .morning h2 { font-weight: 700; line-height: 1.35; }
+  .morning .prose { margin-inline-start: clamp(0rem, 28vw, 30rem); max-width: var(--sc-measure); }
+  .morning .prose p { font: 400 var(--sc-t-lg)/1.65 var(--sc-font-text); margin: 0 0 var(--sc-4); text-wrap: pretty; }
+  .facts { margin: var(--sc-8) 0 0; margin-inline-start: clamp(0rem, 28vw, 30rem); max-width: 40rem; padding: 0; }
+  .facts div { display: grid; grid-template-columns: 9rem 1fr; gap: var(--sc-4); padding: var(--sc-3) 0;
+    border-top: 1px solid var(--sc-hairline-strong); font: 400 var(--sc-t-base)/1.5 var(--sc-font-text); }
+  .facts div:last-child { border-bottom: 1px solid var(--sc-hairline-strong); }
+  .facts dt { font-weight: 500; color: var(--sc-ink-soft); } .facts dd { margin: 0; }
+
+  /* ---------- 3 · the record ---------- */
+  .noon { padding-block: var(--sc-8) var(--sc-9); }
+  .noon .big-wrap { display: flex; justify-content: flex-end; }
+  .noon .big { margin: 0; font: 860 24vw/0.86 var(--sc-font-display); font-stretch: 116%; letter-spacing: -0.055em; padding: 0.06em 0.02em 0.1em; }
+  html:lang(ar) .noon .big { font-weight: 800; line-height: 1.25; font-size: 19vw; }
+  .timetable { list-style: none; margin: var(--sc-7) 0 0; padding: 0; }
+  .timetable li { display: grid; grid-template-columns: 8.5rem minmax(0, 1.1fr) minmax(0, 1.6fr); gap: var(--sc-5);
+    padding: var(--sc-5) 0; border-top: 1px solid var(--sc-hairline-strong); align-items: baseline; }
+  .timetable li:last-child { border-bottom: 1px solid var(--sc-hairline-strong); }
+  .timetable .res { font: 700 var(--sc-t-base)/1.25 var(--sc-font-display); color: var(--sc-accent); font-variant-numeric: tabular-nums; }
+  .timetable h3 { margin: 0; font: 700 var(--sc-t-xl)/1.15 var(--sc-font-display); letter-spacing: var(--sc-track-snug); }
+  .timetable h3 small { display: block; margin-top: var(--sc-2); font: 400 var(--sc-t-sm)/1.4 var(--sc-font-text); letter-spacing: 0; color: var(--sc-ink-soft); }
+  .timetable p { margin: 0; font: 400 var(--sc-t-base)/1.6 var(--sc-font-text); max-width: 52ch; }
+
+  /* ---------- 4 · studios + toolkit ---------- */
+  .studios { padding-block: var(--sc-9) var(--sc-section); }
+  .studios h2 { margin: 0 0 var(--sc-8); font: 500 var(--sc-t-lg)/1.3 var(--sc-font-text); color: var(--sc-ink-soft); }
+  .studio-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: var(--sc-8) var(--sc-9); align-items: start; }
+  .studio { min-width: 0; }
+  .studio:nth-child(2) { margin-top: var(--sc-10); }
+  .studio h3 { margin: 0 0 var(--sc-4); font: 800 min(var(--sc-t-4xl), 6.4vw)/0.92 "Archivo", sans-serif; font-stretch: 110%;
+    letter-spacing: -0.045em; direction: ltr; text-align: start; }
+  .studio p { margin: 0 0 var(--sc-4); max-width: 34ch; font: 400 var(--sc-t-lg)/1.55 var(--sc-font-text); }
+  .toolkit { margin: var(--sc-10) 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--sc-8); }
+  .toolkit div { display: grid; grid-template-columns: 7.5rem 1fr; gap: var(--sc-4); padding: var(--sc-3) 0;
+    border-top: 1px solid var(--sc-hairline-strong); font: 400 var(--sc-t-sm)/1.55 var(--sc-font-text); }
+  .toolkit dt { font-weight: 500; color: var(--sc-ink-soft); } .toolkit dd { margin: 0; }
+
+  /* ---------- 5 · near-silence before the peak ---------- */
+  .quiet { min-height: 115svh; display: grid; place-items: center; padding: var(--sc-section) var(--sc-gutter); }
+  .quiet p { margin: 0; max-width: 26ch; text-align: center; font: 500 var(--sc-t-lg)/1.45 var(--sc-font-text); text-wrap: balance; }
+
+  /* ---------- 6 · the peak: a reel of four projects, the drone flying each one ---------- */
+  .reel-item { position: absolute; z-index: 4; inset-inline-start: var(--sc-gutter); inset-inline-end: var(--sc-gutter); bottom: 9svh; }
+  .reel-item .tag { margin: 0 0 var(--sc-4); font: 600 var(--sc-t-sm)/1.3 var(--sc-font-text); color: var(--sc-accent);
+    letter-spacing: 0.06em; text-transform: uppercase; font-variant-numeric: tabular-nums; }
+  .reel-item .claim { margin: 0 0 var(--sc-5); max-width: 12ch;
+    font: 820 var(--sc-t-4xl)/0.95 var(--sc-font-display); font-stretch: 108%; letter-spacing: var(--sc-track-tight); }
+  html:lang(ar) .reel-item .claim { font-weight: 800; line-height: 1.3; max-width: 8em; }
+  .reel-item:nth-of-type(2) .claim { max-width: 10.5ch; }
+  html:lang(ar) .reel-item:nth-of-type(2) .claim { max-width: 6.4em; }
+  .reel-item .claim .sc-split:last-of-type { color: var(--sc-accent); }
+  .reel-item .sub { margin: 0; max-width: 46ch; font: 400 var(--sc-t-lg)/1.55 var(--sc-font-text); color: var(--sc-ink-soft); }
+  .reel-bar { position: absolute; z-index: 4; inset-inline-start: var(--sc-gutter); top: calc(var(--sc-5) + 3.2rem);
+    display: flex; gap: var(--sc-2); opacity: clamp(0, calc((var(--sc-p, 0) - 0.06) * 20), 1); }
+  .reel-bar i { display: block; width: 2.75rem; height: 2px; background: var(--sc-hairline-strong); overflow: hidden; }
+  .reel-bar i::after { content: ""; display: block; height: 100%; background: var(--sc-accent); transform-origin: left;
+    transform: scaleX(clamp(0, calc((var(--sc-p, 0) - var(--a)) / var(--l)), 1)); }
+  [dir="rtl"] .reel-bar i::after { transform-origin: right; }
+
+  /* ---------- 7 · close ---------- */
+  .close { min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding: var(--sc-10) var(--sc-gutter) var(--sc-6); }
+  .close .sc-stack { max-width: 38rem; padding-bottom: var(--sc-4); position: relative; z-index: 2; }
+  .close-row { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--sc-7); }
+  .close-photo { margin: 0 0 calc(var(--sc-6) * -1); flex: none; height: min(78svh, 900px); position: relative; }
+  .close-photo canvas { height: 100%; width: auto; display: block;
+    -webkit-mask-image: linear-gradient(to bottom, #000 74%, transparent 99%); mask-image: linear-gradient(to bottom, #000 74%, transparent 99%);
+  }
+  .close-photo::before { content: ""; position: absolute; inset: 18% 6% 8%; z-index: -1; border-radius: 50%;
+    background: radial-gradient(closest-side, color-mix(in oklab, var(--sc-accent) 22%, transparent), transparent); }
+  .close .foot { position: relative; z-index: 2; margin-top: 0; }
+  .close p { margin: 0 0 var(--sc-3); font: 400 var(--sc-t-base)/1.6 var(--sc-font-text); }
+  .close .ask { font: 500 var(--sc-t-lg)/1.4 var(--sc-font-text); margin-top: var(--sc-4); display: flex; flex-wrap: wrap; gap: var(--sc-3) var(--sc-6); }
+  .close .addr { direction: ltr; unicode-bidi: isolate; color: var(--sc-ink-soft); }
+  .foot { display: flex; justify-content: space-between; gap: var(--sc-4); margin-top: var(--sc-10); padding-top: var(--sc-4);
+    border-top: 1px solid var(--sc-hairline); font: 400 var(--sc-t-xs)/1.4 var(--sc-font-text); color: var(--sc-ink-soft); }
+
+  /* Portrait tablets: stack the hero and the close like a phone, keep the wider type. */
+  @media (orientation: portrait) and (min-width: 761px) and (max-width: 1100px) {
+    .hero .stand { bottom: 24svh; }
+    .hero .ascii { inset-inline-end: auto; left: 50%; translate: -50% 0; bottom: auto; top: 9svh; height: 56svh; }
+    .close-row { flex-direction: column-reverse; align-items: stretch; gap: var(--sc-7); }
+    .close-photo { height: 50svh; margin: 0 auto calc(var(--sc-4) * -1); }
+    .studio-grid { grid-template-columns: 1fr; } .studio:nth-child(2) { margin-top: 0; }
+  }
+  @media (max-width: 760px) {
+    .hero .stand { bottom: 26svh; }
+    .hero .ascii { inset-inline-end: auto; left: 50%; translate: -50% 0; bottom: auto; top: 9svh; height: 58svh; }
+    .hero-meta__in { flex-direction: column; align-items: flex-start; gap: var(--sc-3); font-size: var(--sc-t-base); }
+    .reel-item { bottom: 7svh; }
+    .reel-item .claim { font-size: var(--sc-t-3xl); }
+    .reel-item .sub { font-size: var(--sc-t-base); }
+    .morning h2 { font-size: var(--sc-t-2xl); }
+    .morning .prose, .facts { margin-inline-start: 0; }
+    .facts div { grid-template-columns: 7rem 1fr; }
+    .timetable li { grid-template-columns: 1fr; gap: var(--sc-2); }
+    .noon .big { font-size: 28vw; }
+    .studio-grid, .toolkit { grid-template-columns: 1fr; }
+    .studio:nth-child(2) { margin-top: 0; }
+    .studio h3 { font-size: min(var(--sc-t-3xl), 13vw); }
+    .foot { flex-direction: column; }
+    .close-row { flex-direction: column-reverse; align-items: stretch; gap: var(--sc-6); }
+    .close-photo { height: 52svh; margin: 0 auto calc(var(--sc-4) * -1); }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="flight" aria-hidden="true"></canvas>
+<div class="sc-grain" aria-hidden="true"></div>
+
+<div class="chrome">
+  <a class="mark" href="#top">A7med.cc</a>
+  <div class="chrome__trail">
+    <button class="lang" type="button" id="lang" lang="ar">العربية</button>
+    <a class="link" href="#contact" data-i18n="cta">Get in touch</a>
+  </div>
+</div>
+
+<main id="top">
+
+  <!-- 1 · HERO -->
+  <section class="hero" data-sc-act="pin" data-sc-span="1.7" data-fly-act>
+    <div data-sc-stage>
+      <canvas class="ascii" id="ascii" aria-hidden="true"></canvas>
+      <div class="stand"><div data-sc-cue="0 1 0 0" data-sc-rise="0">
+        <h1 class="name" data-fit id="heroName"><span data-i18n="first">Ahmed</span><span class="sr" data-i18n="last"> Mohamed</span></h1>
+      </div></div>
+      <div class="hero-meta"><div class="hero-meta__in" data-sc-cue="0 1 0 0" data-sc-rise="0">
+        <p><strong data-i18n="fullname">Ahmed Mohamed</strong><span class="role" data-i18n="role">Developer. Learning AI and game design.</span></p>
+        <p class="where" data-i18n="where">Abu Dhabi, UAE</p>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- 2 · WHO -->
+  <section class="morning sc-section" data-sc-act="flow" data-fly-act>
+    <div class="sc-wrap" data-sc-in data-sc-stagger="60">
+      <h2 data-i18n="hello">Hello. I'm Ahmed.</h2>
+      <div class="prose"><p data-i18n="bio1"></p><p data-i18n="bio2"></p></div>
+      <dl class="facts">
+        <div><dt data-i18n="fBased">Based in</dt><dd data-i18n="vBased">Abu Dhabi</dd></div>
+        <div><dt data-i18n="fSchool">School</dt><dd data-i18n="vSchool"></dd></div>
+        <div><dt data-i18n="fCode">Coding</dt><dd data-i18n="vCode"></dd></div>
+        <div><dt data-i18n="fComp">Competitions</dt><dd data-i18n="vComp"></dd></div>
+        <div><dt data-i18n="fLang">Languages</dt><dd data-i18n="vLang"></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- 3 · THE RECORD -->
+  <section class="noon sc-section" data-sc-act="flow" data-fly-act>
+    <div class="sc-wrap">
+      <div class="big-wrap" data-sc-reveal="left" data-sc-reveal-at="0.08 0.42"><h2 class="big" data-i18n="work">Work.</h2></div>
+      <ol class="timetable">
+        <li><span class="res" data-i18n="r1"></span><h3 data-i18n="t1"></h3><p data-i18n="d1"></p></li>
+        <li><span class="res" data-i18n="r2"></span><h3 data-i18n="t2"></h3><p data-i18n="d2"></p></li>
+        <li><span class="res" data-i18n="r3"></span><h3 data-i18n="t3"></h3><p data-i18n="d3"></p></li>
+        <li><span class="res" data-i18n="r4"></span><h3 data-i18n="t4"></h3><p data-i18n="d4"></p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 4 · STUDIOS + TOOLKIT -->
+  <section class="studios sc-section" data-sc-act="flow" data-fly-act>
+    <div class="sc-wrap" data-sc-in data-sc-stagger="70">
+      <h2 data-i18n="founded">I also founded two studios.</h2>
+      <div class="studio-grid">
+        <article class="studio"><h3>Nathir.ae</h3><p data-i18n="nathir"></p>
+          <a class="link" href="https://www.instagram.com/nathir.ae/" rel="noopener" target="_blank">@nathir.ae</a></article>
+        <article class="studio"><h3>LOOP.IDEA</h3><p data-i18n="loop"></p>
+          <a class="link" href="https://www.instagram.com/loop.idea/" rel="noopener" target="_blank">@loop.idea</a></article>
+      </div>
+      <dl class="toolkit">
+        <div><dt data-i18n="kCode">Code</dt><dd>Python, C, JavaScript, HTML, CSS</dd></div>
+        <div><dt data-i18n="kBuild">Build</dt><dd data-i18n="vBuild"></dd></div>
+        <div><dt data-i18n="kGames">Games</dt><dd data-i18n="vGames"></dd></div>
+        <div><dt data-i18n="kAI">AI</dt><dd data-i18n="vAI"></dd></div>
+        <div><dt data-i18n="kDesign">Design</dt><dd data-i18n="vDesign"></dd></div>
+        <div><dt data-i18n="kTools">Tools</dt><dd data-i18n="vTools"></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- 5 · QUIET (authored near-silence before the peak) -->
+  <section class="quiet" data-sc-act="flow" data-fly-act>
+    <p data-sc-cue="0.28 0.86 0.2 0.25" data-sc-kinetic="words" data-i18n="ideas">I turn ideas into practical solutions.</p>
+  </section>
+
+  <!-- 6 · PEAK: four projects in one pinned reel, the drone flying each. Largest span. -->
+  <section class="peak" data-sc-act="pin" data-sc-span="5.2" data-fly-act>
+    <div data-sc-stage>
+      <h2 class="sr" data-i18n="projects">Projects</h2>
+      <div class="reel-bar" aria-hidden="true"><i style="--a:0.1;--l:0.20"></i><i style="--a:0.3;--l:0.22"></i><i style="--a:0.52;--l:0.22"></i><i style="--a:0.74;--l:0.26"></i></div>
+      <div class="reel-item">
+        <p class="tag" data-sc-cue="0.10 0.30 0.04 0.04" data-i18n="p1tag"></p>
+        <h3 class="claim" data-sc-cue="0.11 0.30 0.05 0.04" data-sc-kinetic="lines" data-i18n="p1claim"></h3>
+        <p class="sub" data-sc-cue="0.13 0.30 0.05 0.04" data-i18n="p1sub"></p>
+      </div>
+      <div class="reel-item">
+        <p class="tag" data-sc-cue="0.30 0.52 0.04 0.04" data-i18n="p2tag"></p>
+        <h3 class="claim" data-sc-cue="0.31 0.52 0.05 0.04" data-sc-kinetic="lines" data-i18n="p2claim"></h3>
+        <p class="sub" data-sc-cue="0.33 0.52 0.05 0.04" data-i18n="p2sub"></p>
+      </div>
+      <div class="reel-item">
+        <p class="tag" data-sc-cue="0.52 0.74 0.04 0.04" data-i18n="p3tag"></p>
+        <h3 class="claim" data-sc-cue="0.53 0.74 0.05 0.04" data-sc-kinetic="lines" data-i18n="p3claim"></h3>
+        <p class="sub" data-sc-cue="0.55 0.74 0.05 0.04" data-i18n="p3sub"></p>
+      </div>
+      <div class="reel-item">
+        <p class="tag" data-sc-cue="0.74 1.00 0.04 0.04" data-i18n="p4tag"></p>
+        <h3 class="claim" data-sc-cue="0.75 1.00 0.05 0.04" data-sc-kinetic="lines" data-i18n="p4claim"></h3>
+        <p class="sub" data-sc-cue="0.77 1.00 0.05 0.04" data-i18n="p4sub"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · CLOSE -->
+  <section class="close" id="contact" data-sc-act="flow" data-fly-act>
+    <div class="close-row">
+    <div class="sc-stack" data-sc-in data-sc-stagger="60">
+      <p data-i18n="open">Open to opportunities, collaborations and competitions.</p>
+      <p class="ask">
+        <a class="link" href="mailto:mitwalli1978@gmail.com" data-i18n="cta" data-sc-magnet="0.25">Get in touch</a>
+        <a class="link" href="https://www.instagram.com/nathir.ae/" rel="noopener" target="_blank">@nathir.ae</a>
+        <a class="link" href="https://www.instagram.com/loop.idea/" rel="noopener" target="_blank">@loop.idea</a>
+      </p>
+      <p class="addr">mitwalli1978@gmail.com</p>
+    </div>
+    <figure class="close-photo"><canvas id="ascii2" aria-hidden="true"></canvas></figure>
+    </div>
+    <footer class="foot"><span data-i18n="footName">Ahmed Mohamed, Abu Dhabi</span><span>A7med.cc</span></footer>
+  </section>
+
+</main>
+
+<script>
+/* ===== Copy, English + Arabic. Facts from a7med.cc. ===== */
+var I18N = {
+  en: {
+    cta: 'Get in touch', first: 'Ahmed', last: ' Mohamed', fullname: 'Ahmed Mohamed',
+    role: 'Developer. Learning AI and game design.', where: 'Abu Dhabi, UAE',
+    hello: 'Hello. I’m Ahmed.',
+    bio1: 'I’m a Grade 12 student at Al Ghad School, and I have been coding for more than six years. I like turning ideas into things that actually work: web and mobile apps, games, and small cars that drive themselves.',
+    bio2: 'I mix programming with design, video editing and data analysis, and right now I’m going deeper into AI and machine learning.',
+    fBased: 'Based in', vBased: 'Abu Dhabi', fSchool: 'School', vSchool: 'Al Ghad School, Grade 12, class of <span class="num">2027</span>',
+    fCode: 'Coding', vCode: '<span class="num" data-sc-count="0 6" data-sc-count-at="0.15 0.45">6</span>+ years', fComp: 'Competitions', vComp: '<span class="num" data-sc-count="0 8" data-sc-count-at="0.15 0.45">8</span>+',
+    fLang: 'Languages', vLang: 'Arabic, English',
+    work: 'Work.',
+    r1: '1st <span class="num">2023</span><br>2nd <span class="num">2024</span>', t1: 'A2RL<small>Abu Dhabi Autonomous Racing League</small>',
+    d1: 'Programmed a small autonomous car to navigate in real time with no cameras and no GPS.',
+    r2: '1st place', t2: '42 Abu Dhabi Hackathon<small>and the 42 Piscine</small>',
+    d2: 'Won first place with a sustainability solution, and completed the Piscine, an intensive C programming bootcamp.',
+    r3: '<span class="num">2</span> years', t3: 'Games for Change<small>UN Sustainable Development Goals</small>',
+    d3: 'Designed and built an educational game about social issues, leading the creative and technical work two years running.',
+    r4: 'Team', t4: 'University of Abu Dhabi<small>STAM Program</small>',
+    d4: 'A team competition solving math and science problems with Python and data analysis.',
+    founded: 'I also founded two studios.',
+    nathir: 'A media production team: photography, video, event coverage and visual storytelling.',
+    loop: 'A creative studio for brand identities, websites and digital experiences.',
+    kCode: 'Code', kBuild: 'Build', vBuild: 'Web, mobile apps, responsive design, UI/UX', kGames: 'Games', vGames: 'Unity, Scratch, educational games',
+    kAI: 'AI', vAI: 'Machine learning, sensor automation, autonomous systems', kDesign: 'Design', vDesign: 'Graphic design, video editing, game assets',
+    kTools: 'Tools', vTools: 'Git, Linux, VS Code, data analysis',
+    ideas: 'I turn ideas into practical solutions.',
+    projects: 'Projects',
+    p1tag: 'A2RL · 1st <span class="num">2023</span> · 2nd <span class="num">2024</span>',
+    p1claim: 'No cameras. No GPS.',
+    p1sub: 'A small autonomous car I programmed to find its own way in real time, for the Abu Dhabi Autonomous Racing League.',
+    p2tag: '42 Abu Dhabi · 1st place',
+    p2claim: 'First place at <span class="hl">42.</span>',
+    p2sub: 'Won the 42 Abu Dhabi Hackathon with a sustainability solution, then completed the Piscine, an intensive C bootcamp.',
+    p3tag: 'Games for Change · <span class="num">2</span> years',
+    p3claim: 'A game about the <span class="hl">real world.</span>',
+    p3sub: 'An educational game on social issues tied to the UN Sustainable Development Goals. I led the creative and technical work, two years running.',
+    p4tag: 'University of Abu Dhabi · STAM',
+    p4claim: 'Math, solved in <span class="hl">Python.</span>',
+    p4sub: 'A team competition solving math and science problems with Python and data analysis.',
+    open: 'Open to opportunities, collaborations and competitions.',
+    photoAlt: 'Ahmed Mohamed', footName: 'Ahmed Mohamed, Abu Dhabi', title: 'Ahmed Mohamed · Abu Dhabi', toggle: 'العربية'
+  },
+  ar: {
+    cta: 'تواصل معي', first: 'أحمد', last: ' محمد', fullname: 'أحمد محمد',
+    role: 'مطوّر. أتعلّم الذكاء الاصطناعي وتصميم الألعاب.', where: 'أبوظبي، الإمارات',
+    hello: 'مرحباً. أنا أحمد.',
+    bio1: 'أنا طالب في الصف الثاني عشر في مدرسة الغد، وأبرمج منذ أكثر من ست سنوات. أحب أن أحوّل الأفكار إلى أشياء تعمل فعلاً: تطبيقات ويب وجوال، وألعاب، وسيارات صغيرة تقود نفسها.',
+    bio2: 'أجمع بين البرمجة والتصميم والمونتاج وتحليل البيانات، وأتعمّق الآن في الذكاء الاصطناعي وتعلّم الآلة.',
+    fBased: 'مقيم في', vBased: 'أبوظبي', fSchool: 'المدرسة', vSchool: 'مدرسة الغد، الصف الثاني عشر، دفعة <span class="num">2027</span>',
+    fCode: 'البرمجة', vCode: 'أكثر من <span class="num" data-sc-count="0 6" data-sc-count-at="0.15 0.45">6</span> سنوات', fComp: 'المسابقات', vComp: 'أكثر من <span class="num" data-sc-count="0 8" data-sc-count-at="0.15 0.45">8</span>',
+    fLang: 'اللغات', vLang: 'العربية، الإنجليزية',
+    work: 'إنجازات.',
+    r1: 'الأول <span class="num">2023</span><br>الثاني <span class="num">2024</span>', t1: 'A2RL<small>دوري أبوظبي لسباقات المركبات ذاتية القيادة</small>',
+    d1: 'برمجت سيارة صغيرة ذاتية القيادة تتنقّل في الوقت الفعلي بلا كاميرات ولا GPS.',
+    r2: 'المركز الأول', t2: 'هاكاثون 42 أبوظبي<small>وبرنامج Piscine</small>',
+    d2: 'فزت بالمركز الأول بحلّ للاستدامة، وأتممت برنامج Piscine المكثّف في البرمجة بلغة C.',
+    r3: 'سنتان', t3: 'Games for Change<small>أهداف الأمم المتحدة للتنمية المستدامة</small>',
+    d3: 'صمّمت وطوّرت لعبة تعليمية عن قضايا اجتماعية، وقدت العمل الإبداعي والتقني سنتين متتاليتين.',
+    r4: 'فريق', t4: 'جامعة أبوظبي<small>برنامج STAM</small>',
+    d4: 'مسابقة جماعية لحل مسائل الرياضيات والعلوم باستخدام بايثون وتحليل البيانات.',
+    founded: 'وأسّست أيضاً استوديوهين.',
+    nathir: 'فريق إنتاج إعلامي: تصوير فوتوغرافي وفيديو، وتغطية فعاليات، وسرد بصري.',
+    loop: 'استوديو إبداعي للهويات البصرية والمواقع والتجارب الرقمية.',
+    kCode: 'البرمجة', kBuild: 'التطوير', vBuild: 'الويب، تطبيقات الجوال، التصميم المتجاوب، UI/UX', kGames: 'الألعاب', vGames: 'Unity، Scratch، ألعاب تعليمية',
+    kAI: 'الذكاء الاصطناعي', vAI: 'تعلّم الآلة، أتمتة الحسّاسات، الأنظمة ذاتية القيادة', kDesign: 'التصميم', vDesign: 'التصميم الجرافيكي، المونتاج، عناصر الألعاب',
+    kTools: 'الأدوات', vTools: 'Git، Linux، VS Code، تحليل البيانات',
+    ideas: 'أحوّل الأفكار إلى حلول عملية.',
+    projects: 'المشاريع',
+    p1tag: 'A2RL · الأول <span class="num">2023</span> · الثاني <span class="num">2024</span>',
+    p1claim: 'بلا كاميرات. بلا GPS.',
+    p1sub: 'سيارة صغيرة ذاتية القيادة برمجتها لتجد طريقها بنفسها في الوقت الفعلي، في دوري أبوظبي لسباقات المركبات ذاتية القيادة.',
+    p2tag: '42 أبوظبي · المركز الأول',
+    p2claim: 'المركز الأول في <span class="hl">42.</span>',
+    p2sub: 'فزت بهاكاثون 42 أبوظبي بحلّ للاستدامة، ثم أتممت برنامج Piscine المكثّف في لغة C.',
+    p3tag: 'Games for Change · سنتان',
+    p3claim: 'لعبة عن <span class="hl">العالم الحقيقي.</span>',
+    p3sub: 'لعبة تعليمية عن قضايا اجتماعية مرتبطة بأهداف الأمم المتحدة للتنمية المستدامة. قدت العمل الإبداعي والتقني سنتين متتاليتين.',
+    p4tag: 'جامعة أبوظبي · STAM',
+    p4claim: 'رياضيات تُحلّ <span class="hl">ببايثون.</span>',
+    p4sub: 'مسابقة جماعية لحل مسائل الرياضيات والعلوم باستخدام بايثون وتحليل البيانات.',
+    open: 'منفتح على الفرص والتعاون والمسابقات.',
+    photoAlt: 'أحمد محمد', footName: 'أحمد محمد، أبوظبي', title: 'أحمد محمد · أبوظبي', toggle: 'English'
+  }
+};
+function fitNames() {
+  [].forEach.call(document.querySelectorAll('[data-fit]'), function (el) {
+    el.style.fontSize = '100px';
+    var w = el.scrollWidth, target = innerWidth * (innerWidth < 760 ? 0.9 : 0.86);
+    var max = innerHeight * (document.documentElement.lang === 'ar' ? 0.42 : 0.5);
+    el.style.fontSize = Math.min(100 * target / w, max).toFixed(2) + 'px';
+  });
+}
+function applyLang(l) {
+  var d = I18N[l];
+  document.documentElement.lang = l; document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
+  document.title = d.title;
+  [].forEach.call(document.querySelectorAll('[data-i18n]'), function (el) { var v = d[el.getAttribute('data-i18n')]; if (v != null) el.innerHTML = v; });
+  [].forEach.call(document.querySelectorAll('[data-i18n-alt]'), function (el) { el.alt = d[el.getAttribute('data-i18n-alt')] || ''; });
+  var b = document.getElementById('lang'); b.textContent = d.toggle; b.lang = l === 'ar' ? 'en' : 'ar';
+  try { localStorage.setItem('lang', l); } catch (e) {}
+  splitName(); fitNames();
+}
+function splitName() {
+  var h = document.getElementById('heroName'), el = h.querySelector('[data-i18n=first]'), txt = el.textContent;
+  h.setAttribute('aria-label', I18N[document.documentElement.lang].fullname);
+  el.setAttribute('aria-hidden', 'true');
+  el.innerHTML = (document.documentElement.lang === 'ar' ? [txt] : txt.split('')).map(function (c, i) {
+    return '<span class="ch" style="--i:' + i + '"><span class="chi">' + c + '</span></span>'; }).join('');
+  dispatchEvent(new Event('namesplit'));
+}
+(function () {
+  var l = 'en';
+  try { l = localStorage.getItem('lang') || ((navigator.language || '').slice(0, 2) === 'ar' ? 'ar' : 'en'); } catch (e) {}
+  if (/[?&]lang=ar/.test(location.search)) l = 'ar';
+  if (/[?&]lang=en/.test(location.search)) l = 'en';
+  applyLang(l);
+  // Switching language reloads the page at the same scroll position. The scroll engine
+  // splits headlines into lines once, so swapping their text in place would leave the new
+  // text outside its control (every reel headline visible at once).
+  document.getElementById('lang').addEventListener('click', function () {
+    var next = document.documentElement.lang === 'ar' ? 'en' : 'ar';
+    try { localStorage.setItem('lang', next); } catch (e) {}
+    var u = new URL(location.href); u.searchParams.set('lang', next); u.searchParams.set('y', String(Math.round(scrollY)));
+    document.body.classList.add('leaving');
+    setTimeout(function () { location.replace(u.toString()); }, 200);
+  });
+  addEventListener('resize', fitNames);
+  if (document.fonts) document.fonts.ready.then(fitNames);
+})();
+</script>
+<script src="scrollcraft.js"></script>
+<script>ScrollCraft.mount(document.body);
+(function () { // returning from a language switch: restore the scroll position, then fade in
+  var m = location.search.match(/[?&]y=(\d+)/); if (!m) return;
+  var sy = m[1];
+  try { var u = new URL(location.href); u.searchParams.delete('y'); history.replaceState(null, '', u.toString()); } catch (e) {}
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  var go = function () { scrollTo(0, +sy); requestAnimationFrame(function () { document.documentElement.classList.remove('lang-swap'); }); };
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(function () { setTimeout(go, 60); });
+  setTimeout(function () { document.documentElement.classList.remove('lang-swap'); }, 1500);
+})();</script>
+<script>
+/* LiDAR scan: each record row is swept into view by a scan line. */
+(function () {
+  var ol = document.querySelector('.timetable'), rows = [].slice.call(ol.children);
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches ) return;
+  rows.forEach(function (r) { r.classList.add('scan'); });
+  // Clipped rows never report as intersecting, so test geometry on scroll instead.
+  var pending = rows.slice(), busy = 0, ticking = false;
+  function check() {
+    ticking = false;
+    pending = pending.filter(function (r) {
+      var t = r.getBoundingClientRect();
+      if (t.top < innerHeight * 0.86 && t.bottom > 0) { setTimeout(scan, 170 * busy++, r); setTimeout(function () { busy = Math.max(0, busy - 1); }, 170 * busy); return false; }
+      return true;
+    });
+    if (!pending.length) removeEventListener('scroll', onScroll);
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(check); } }
+  addEventListener('scroll', onScroll, { passive: true }); addEventListener('load', check); check();
+  function scan(r) {
+    var rtl = document.documentElement.dir === 'rtl', W = r.offsetWidth, line = document.createElement('span');
+    line.className = 'scanline'; line.style.top = r.offsetTop + 'px'; line.style.height = r.offsetHeight + 'px'; line.style.left = r.offsetLeft + 'px';
+    ol.appendChild(line); r.classList.add('on'); dispatchEvent(new Event('drone:scan'));
+    var a = rtl ? W : 0, b = rtl ? 0 : W;
+    line.animate([{ transform: 'translateX(' + a + 'px)', opacity: 1 }, { transform: 'translateX(' + b + 'px)', opacity: 1, offset: 0.8 },
+      { transform: 'translateX(' + b + 'px)', opacity: 0 }], { duration: 1050, easing: 'cubic-bezier(0.23,1,0.32,1)', fill: 'forwards' })
+      .onfinish = function () { line.remove(); };
+  }
+})();
+</script>
+<script>
+/* Portrait in characters. Data is a luminance grid (0 = empty) derived from a photo; the photo itself is not shipped. */
+var ASCII_DATA = {"cols": 150, "rows": 88, "b64": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwwPkQ8Pjs0ODs6QTo5RT9JPj0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADQ2NTo+NTMrKzI0KzAxMTIuLyovNDQwMDNBSFRQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC8zOTYyMzMzMjU0NDMyLy4yMzMvLzEyMzI0NjAvKy4oSWRQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2MzMoMDAuMCwtLS0pKSwvKywrKSwqLCsuMjAzMjMwMzQ5KyU1Z2oAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANjU0MTIxLzAxLyonKi0qKSglJSgoKS0tLCkpKygsMjEuMjA0NDMvIzNqgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEQ7MDQzMC0uLSsqJCYqKSgnJyYmJigrKiwpKSkoKCgpKSwvMC8xMi8xODMgN3VtAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDMy0zNjYpKiooJygpKCgoKCcnJygqLCcmJyYnKCkqKSksKigoKCorLzIxLzEzKBo2jAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE0tKS8yLScoKCgoKSkoKCcoKCktMy8vMiglKikpKScoKCgoKSkoKikpKyosLi4uLTIoGrUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQiYuMy8xLSkqKyooKCcmJiYnJycwMisvMz0rISkmJykoKCkoKSorLiwrLCorLi0tLC40HjzZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABoIy0yMTAvMC8vLikoKisrLCwrMDEuLi0zLCwsKCQgKi4oJSMkJyIkKSswMissLCotLSwxNxScfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB5FDMuMjIuKSYhHCEjFxgaGhoXHR8bJCYdIR8UIzE1MyguLDM0MjAzMR4kKCktLCstKywsNSA8rAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHdZHTAxLSsnIC5JRkM3XIBwZldkU0lJMzNKXUuItsXBvLGipqGdo52ehj8yNCIoLiwtKy0nMxp/kwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH5JIywuMSQrRnqoqKKrxMDHycze1tfVx8/Sz8vNwsHEw721q6Okp6GhrHJOTzMnLC8vKy8oKxTDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIBYGioxJydSgXeXnpeiobCxusC+v77AxsLCwcC8wsK/v6+sqainoaKhn41xTDYzMCorLSwuLRi+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHp4FTMtJjNciYKLnqGlr7O3vsLFx8bGxMXFw8K/v728vrKrpKmmo6ObnJOPVDc+MzUjJCwxMBixAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACMFDMoMj1vgomXoKSpsqy1vr/Cw8TFxcXFxMLAwb+8vLevp6ymoZ+en5maiTMuOjo4KykyITWoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACsFTMvND17iI2Nnaalqqy1usDCwsPDxMTDxMLAwr+7ure1s7KtrKGZlJCbl3dWKDg6LSQvF1SlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACuITA0JV6Si4uUsre0t7rDw7/CurvCwsLEwsLFw8PM09LIvLSwtbCwrKOZkKOpQSU0MCEvF38AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACXMComPomRl6SWioR5gI+kw9fh2M7NzdLY0NDY2tCzlmpHMiomKS06ZICfrJWToWkoNCoyFLaPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC0WB0kZ6KTgEAbFhgWFBQXJTdai8C4t7q3vberdjgdFBQdMFFWVVhMQzdKi6KZn7ZJJDEzFGvyf4IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADUQxsoZr5ZLUl2jp+on5txYFRDT32WqqiqqaiaRkZmcG6Ntr2zsairo4FfUYGjmK9xHTMuIYtKFJO0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAISMeBsciLdYe6Srn42QkIx1ZnR1ZF9lnrazqoxJRmNHPmw8MhgdIigsN1VYdX2hn7d/Hy48RjRnY6/IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALOPtZEVlaaHgG81IxoaLxQXFFE+KmuJicbFzW0oiXpLZsuKO0tUXVxjZ4GOrLCtoK2jLTZGKCjQmKXJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJLMrc0bf7KrtpCGk5ubpJePhXRljqeaq8PAyrFQdKS+inCLkY6KhYyesq+6t7Kxo6quMEApLhTHwKa9AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADur85vhqGrtba2rKqblpmHgZOxxJiOwcK/u8KaVYqyvbeqpaioq7q+wL21sbaumaOqd00zHlPkgMqMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADMwMe5gpissq+3vMK/v8LIzdPNmIyct8PCuLKqgIylvLvJysvKysnCwsC6s62spJCOojIuXF+SoO4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA463DnoWms7W2vsTDwsC9wsi0k5WrvMLBuLavjIyNsMzJzM3NyMXBvLy2ta2ei3+Hhig3QGrC9QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAieulzX6esLq8w8rFyMnHycGkmZKsxcrCvLeli7GubYWzsb7Rxr+7t7GppKWLZ2+JhiEzHLjpAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJrbx4SGrrK6wb7M06Wbp6ShqKe0vtLRuaGpp7eyKEGWiYOOobq3rKadl3ppZnKEe2iYqKYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACF48Vjmaevs8CyUGaeqqaZgnV5ha6uiXRDNjo6Z6iurKeSfX2Sn4h4dmpwZWyPl+EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANDFUY2qqG4zaayzsrC2moVzcVRRMxkzREpwm7GGdWtVQjhXbnJ4dWlucXWOrIcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADuak2LrCw2TFNye36WaGFMaICZqYF8akxXdYB1U0QlPFRlk5F1ZFtmZYh+o38AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA61Fqs5Jbc39RLzhcamBUUV18a1RJTFRUXkAyJihqrK6smGtSW1xfbot+rYUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAArMlEe6jKwL2/iFU9XICOn5vIvK27rK6ejVVNWZeylpiNS09gaVlaZHFllawAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMWyUlt5rr20ubKHT0ZZdqG9rqiplF1bUlRniJaRjIdqVGxlVFNdWVZRkMwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACtultfaJGspqqpjmxRRj5cdG5UTj9DVnKJlpKHdWZYYmVYTVlcTkdYZuwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAieRoX3F1lKesqaiqhVpeUTNTZHGDnqCWnIJ7YVVfWVVVUEw+L1F0drPhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGvtTmBtZoqmrKe2wsLEv6a9v7u3rKyhnYd8TlBZUExIQSs4a350jYCQyn0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC2jkpeTGt/mrC1t7e8wsG2srGotqOHfmhFPU5CQT8vI0mFh3WSn5RmcMe2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2HluUUE9UYOHk5qmyLm0vad+gF8zQDM4QTw4MyU0faqXkZaTlmhhrKm61G8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2IeCjXFFICgqPThgeXJxd04/PSsnKTQ3NTUyJVu1sqGlnJOWiX+Bs66X7vjavngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA7YyQpqWOZjUrGhgeHR8jJCYpKCktMzY2NjMWOKC3p6qplpaVgYOrsaDh5Njj7ffy1ax1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZavo/neGsqmupYGJflM+KxkcGRkgJissIyAoJB1Yr8Cyp6eknJ2UjK2vo9/q2+Hg393d5/L5776AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAerXk8/Hb7piAq6mvsKesuK6rqpdkVEgzQS8lPlNHWabIu6ysqqupqaiZlaK36Obc4+Pi4uLh393b4O/78Mx6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAc8Lr8+3g2dbS58d1pausrqmqr7/HwLa8y8S0t6Srws3Fw76vrK6vsa+ssKeQntnx4Nzh4uLi4uLi4uPi4d/f4ev47sd7AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcLjj8OTZ2Nvc2dfW3OyEia+rraKhnKC3wru+t6Ckpq63sa2vrq+vsLCxs7Svn5fD7efc4OHh4eLi4uLi4uLj4+Pj4d7b4e/57rt1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAg7rs9uva09re3dvY2Nja2OHZfJCvsKuhnpWRnqWkoKGlqq6vsLSzs7K0tK+tqaesxujt4N/h4eHj4+Li4uPj4+Tk5OPj4+Tl5ODd4fH467Z1AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABhlNTx+O3f2dvd3uHe3tzb2tra2djh15B4p7++tbeupaqisruyvMK4ubi2sq6kn6qxw9Hj6+De4uHg4ODh4+Li4+Pj4+Tj4+Pj5OTk5OTk4uDc3+756qteAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGOTxdvy8ubf293k4NXc3dzd3Nze3uHg4+Le5e6ybF5kYnmAe3aFg5CajJyrlZ62q6m72N/m6+Pe3+Df4OHg4d/g4uLj4+Tk5OTj4eLl5OTk5OLh4uPl497a4fX63Z8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH+30OrMsaOZjqKwqaW2poV3fYeMlZl1cHZ0c25ycXJjN1V1b2t2b112an6NcixhgJaxudbc0+Hc2t7g4uPj4eLj5uXm5ufn5uXl5OPj4+Tm5eTk4+Hi4+Tk4+Pj4t7d5ff3wl4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYKHO4t/Nyrahn5mZnKGWmaenhnh+fouRioV1ioJrbGpxYVtoV2t1bmdlZ2FfY1tpPipBS0pVVmdRZJeWiIbFtLe/x8XIycrN0tHS19rc2tvc3t/h4uPi4uHi4ujp5ebn5+fk5N/f8fvHVwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIjQ5tzMt7e3vKaalZySkpeftaF1f4KHiYmJhYKHg3d0dXNqb3VyYVxfYWJiYmNhYXJkLGB9dnCMiIKChIObgJXBr62stbGvs7W2tLS0tba3tbK4x8bJxsnLz9DNy8zN1NTU2Nze2uPj3t70+rgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACE1tnNx726uMLFpJaOlZGTlpmujm56g4iIioSFh4F9fX15dnJrb3ZqW2ZgX2FiX2JfZXM0Qm1hXFeGgH5/gIeGbbCspq6qr7a2t7m/v768urmzq7PMy83Q0MrHwbvExMPGx8jLzczP0NLT1NTS1O70lgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfszXs8HEwr6zvs21cXaIl5CMnK6RZnWCg4aIh4OAfYB8fH58e3VzcndjXGZlY2NiY2llgEkhYmpZZY6KfHt8eoBnjKygpaqnqq+ztrfAvb+9t7CsqrXFyMe/s6inrKa6xsXLysvMzc/Q0dHPz83P0s3T8+ByAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADL3L+stcPAvLrCzKd6S2OOk4+WpINyeoKFi4uKiIaCfIF9fH94eHRubm5oaGpqaWlmZ2V4bBk9b11whYuCe3p6gm5ur6KhpKurramssre/v8C8uq6hq729wLeiqquzt7m/wMPFx8rIys7Ny8vNz9DR09TUzdr5vgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANbMqpCSu7u/y8rBhV5kfpiXkJilfXJ7goiKjIyJg36BgH97fX93d3Rsb3Byb25ubGhsanSJNjFpeXyLiomFfnh6f2Kapp+jo6mrrqmrtby8vsG/sp2gr7+/sqytsa+zt7i5vr6/xMTNz8LExcrLzc7Oz9DQ0s/N6fCHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAqLisoYChvr7Su4hoXoGZk4mRm4uGdn1/hIqNjY2LiICChH14d3h3d3V0dHh8ZGlwcW50dotlFVd9h4qJjo2Jg4KFgICxoaGjp6urqKaut7y+vb+6rJuit7uxpaqvsq2ytre4ure5x9rBnLG8w8bHx8nMzc3Q1NPTzNT20FQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABqw5bHfZK3sqGcdWpbk6GRg4WelnB6gHqHio2QjouEhIaFgXx3dHN0dXd5dHmAbHJ7f3V4f4cvU4d8i4uNjoyKi4iLdp+xoqSlq66sqqSnur2/v7+3npWqvLenq6+xnZiou7e3t7fL1qJmpMK/wsHCxszLytTWz8zO0c3Q0OqhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADNmYTLe3WIm45wamp3l5WHjKCSdHl/fYeNjY2OjoyHhIWDgH19d3N1dXV1d31sUIaFe3Rzk0kojYZ+hI+Oi4uMiYlwi62hoaSmqaytrKynt8K/wsG3kZ+/t7Kss7KwnHGMx7ayt8O+iHGWrLW9wsCwvMK3x8y+zc3O0s7R0L7KAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG7XlV3Cl290gX9vW2aYoX6AoIBxgH9/gYuNjY2Oj46KhoSEhYN8dnFxdXV1eHxPTqWKg3GFhx1PlIOChYiJg4OCiIN4r6Sfoqaqqaytqaisu8DAxMKsjanFr620t7S1smpCt9S6rrTRZGKUmI2Yo52qvKPB1IvAzcjM0tDI2dm5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAK7Ell2gp214hYWJdXyvtYScgWd5foaNjo6OjY2NjY2Lh4OBhoR9fHVydXV3ampJT6yVjHWfRiyHk4CHiYiIhoaGh3uZrJ+io6esrKmlpaavucHBx8SVj7W8sLK0s6GvzadQdZ6Fi8WfUpqmoJWRkLK3q8zPh8DRxsrK0NPMxdrYAAAAAAAAAAAAAAAAAAAAAAAAAAAAXb+xr1RjpnJuhIqRk4ePlqWDdHt8g4+LiIuNjY2NjIiKioaDgX98eG9ydXVyZ2A4b7mXnb1mGlGKjYqLiYiIioqOgXKwnKGjpaerq6imqKOku8LCx7l+h8O3trm8x6GJlqR3UlhdnIkmqbGhk5aaqbGrwuprltu7ws3CytXPxc7XAAAAAAAAAAAAAAAAAAAAAAAAAAAArnqsv2JiaHFvepaWlZegnql1dYB7fICGjI+LjY6OjIiJiYWDgH9+dW9xdXVvbGgklsWhv6EWTXiKhIODhoiHhoWAfJyinqCkp6ipqKirqKCjucG/wbWAkMW1vLmhnqinmKZpTmWArFNPtY+Ni5app5K443SD0be+v8TAyNPRy7/WAAAAAAAAAAAAAAAAAAAAAAAAAAByuk+WxHBmYmVne5iYobRmY6iCZnd1dHl8iYyJjouQi4SDgYKFgH+HcXFwdXVxb15FmoGArzMoSnWJeHx4g4WFhoaCoqiZoqKjp6ynpampq6Gdq8vIxreAnry3vryWiJKWno1/iHd8lF9tlImUlY+cnKfnfEjXu6i9w73Ey8jU0rfMAAAAAAAAAAAAAAAAAAAAAAAAAAC1kFtpx5VFZ11rgoiRtl0lO4B5bnN1fnx6e4CGiIKHhICCg4OBgoOAcHFyd3Vta1RNTSk1TDE9QHSKgXqAiIWFfX2hopueoaSlqayrqKikpaCWlrDKw8CPncS9v7ujiXZ7gImViXF+k0xwgnOJpKVZgu2VKL3IpKi2sb7Prq7Z0cG3AAAAAAAAAAAAAAAAAAAAAAAAAGfDald1lL9nSGVqgIiogzJOQ3Vxa3V7goSAgH6AgoKFfoCBg4R8g4h6cHJ1f31uTlBUOig0QkY+V3GBf4CEiIiAeJGomp+goaChpKenpKaoqaKZk5StxcSvnLnMxMG7jnWSnp2SfHR+kUpdfHSIj06J46MYi9anm7KrtMi4nazXzcmzAAAAAAAAAAAAAAAAAAAAAAAAAKKcW1uIg6C0OVdqcZmUOURTQm54cYKFioV8eX5+fXx/f36ChoCAgoV/bGx2f3pyYlZYSHuIWzg8OmljW3SHinqCoKecm5yfoJ+ho6OioaGkpqKZfHaHjKGWg42lv8HDxKGDjnh2eHl9iz1eaXR1LHjnvyBLvqiFjaips7uynaHT0cS3AAAAAAAAAAAAAAAAAAAAAAAAXLJoaGRskJmwX0tihaBMQlRPUF1wdHRvbYSEeXt8fHx7e3eAiH+AgYZ/Z2lzd3NqXWJaToCCtkE3UIFpV3B9ipianZ2dm5yfn5+hoqKhoaCem5qrkXJsanKLakdgrNS7wqh3dnRydXGAizdaaFszguOtPiSeq4ORk5ewpqWzlJPL0sG3AAAAAAAAAAAAAAAAAAAAAAAAi5VqXV9uhZa4YU+dqWYyT0xPUlZcZGZiXWqKiX57fH18fHx/gICAgX90Z2BubGNUT0pKPDhug0IuVIxrXmpinaSYmp+enJ2fn5+fn6GhoKGiopuko3BicHFugGlCT7LGx8B4X2Vwcm2LhCpJXTZ325k8GYW0fXp6jKGVl6irco3U0LmyAAAAAAAAAAAAAAAAAAAAAABbiXVxXFt0d4quSUS/dDxGTE5QT1VbXmBpZ1xsf4d/fHt8fXt8fn1+gHptYWN0d2lrc2JHQlBRe0gpXX1kW2JxoJyWmp6amJqcnZ2bnqGgnpuWlIuNlJuCdHp5jHRaL02/08qcbF5rbW6cbyhKQW/AhkUdbqx9dHJ1hI+Lk6OVfJnVyrezAAAAAAAAAAAAAAAAAAAAAAB6bndralRJgpesYktfQ0lMTE1OSk1bXGBnZWBha4GEfnh9gHl6fHt8hYN1ZWdpdF1GRERFRE9dgj8qfXFqbHODk5yWmp6WlpqamZ6eoJ2cmIyLjpGTlJWGdHlze3aASDBhwM3DcV9hb3KddykxYq6IYR9Fo4Rob3NzeIeNi4iHgrPNwbW0AAAAAAAAAAAAAAAAAAAAADuKXHVraGZQe7CpfVxVUVJOTk5NS09YW19jX19jX2N1fH+AeHV5eHl3eIloW2VqcGhUV1NPTE1leTkvY2hHa3p8jJGTl5eUlZmbnZWPk4J5jZWOkpKRj4t6ZWxqbXiGRkYwgcjAi19cdICXZB9us45pNCqUamFoZGNqeHx5foCGhr/KubKyAAAAAAAAAAAAAAAAAAAAAGJ+VnNqY2tiYnNIIzZaUE1OTU5NTFFUVltfW11qampxdHV+eXV4enl4e3ZnWmRqb21iX1ZJQklkaj4xcV9PXnV2f4OKkJWXl5aWinyGiImHiJuVioiFgoR1bGpmZHqRYz9JRZrLqmdZcX6eXzZiiW8qIHRtVGJlZmhvdnZ1b3KBnr/AtayuAAAAAAAAAAAAAAAAAAAAAHpTXXBpW15fYFGAUEBXTk1QTkxMSUxPU1dbWlhsa2ptbWlpcnd2dnh4gHRkXV9mbG1tZVVFQU1HZEA4b1xQanFwf3uDjI+OhH+AgYWIioiJiIyKgICEcXNqa2VjZmlvckxWMEnQwnZGcW+WWx1SUjslYHBWZGBeZnBycW9qYHR+uLy4r6yvAAAAAAAAAAAAAAAAAAAAN4hFXWtqZ1dUXVRJS0FMTE9NSUlJR0lNUlNYWVlqbWxqaWNlYGp6eXB1enZkXF9naWhuUklIT01UcT45Z11QWF1xdHF5gIeCgYGHiomMioaHhomGgnt1cXZtYWBfYF9lZlpMSS9mwsJ8dHCKRCVjSCRgblRjY1pfZ3FwaWJfZ4mgsbKvrK6qAAAAAAAAAAAAAAAAAAAAaJFCY3Rla2BcX1hJRjpKUU9IRkdIR0pPVFJRT0xbZ2hhYWJgYl9ean9xcnllXVtdam1vWUpDP09qbjNHZVBQWVNlcWttb36AfICFiI6MhoaGhIaEfXlzcm1fXmFcV1tjaF9OTkozU46HYGeDO0BKL1JkVGBgX1xgam1pY19WY6SiobGsqKqqAAAAAAAAAAAAAAAAAAAAlm0+XW5qY19aW1JNRz5IUUVGRkdJSEtMTFBPS05mXl5fXVtdX19XSX99cXNlUlZVX25ZT0pFRUxXaj42T0NDSVRaX19nbIaIf4KBfn+BgICAgX98e3lycGdbXFxbWFddWlZOT0lPPk1QU3OFQzk5R0hXXl9eX11cYWNnZFtpjqyan6alqainAAAAAAAAAAAAAAAAAAAAmk1IXWVoamJcXE9JR0RHS0ZHR0dIR0pLSU1QSkpdXVxcW1lZWFVUS01zdWxqV1ZdW2FYSU9KRDA9USxEYE1KS09UVGZ4apKFanFvbW5yeHNvdXZ3fX1wamllXl1bWVZTWF1RTEdKTldVWHqENTZEO1FgVFtYWFleYmRmZ2V1qJidpKKqrKilAAAAAAAAAAAAAAAAAABAtE5DWmBiYmNfV1BNSkRESUlJR0ZGSElISUlMRVRdV1tbWVZXVVJRVFdjdmtpaWVZW2JaS0xLND55Th1XaFZOSUxPWnFrb4lfS1ZnY19kamlsbm9zdWxsamprY1xbWlZTWVpPTUtMTFFRWH+AKDtCSVpUU1VUU1piYWFpX2+qnZGepaGnqKShAAAAAAAAAAAAAAAAAABytD5JV1ZkYWFfWFFMSURESUlJR0ZGRkhKSUlDSl5VV1xYVlRTUlFSVFljc21yc2VcW1JTU1I7QpTQ5zsxX1lBRkxWX3BraoN9N0lUVFRUVFZlbnB1dWpsa2pqZGFfXFRSVFVNSk1MSkxVWnWELjVHXktPVFRQU2JjYGRlRJGtgpGfnqOmqKWlAAAAAAAAAAAAAAAAAACPokBIVlNYX2JiWE1MR0VFSUlISUZGRUlNSEk+U2JSVlpWV1RQUlRVVlhidW5vamppW01STU43Smhhn1UuVlNJR1BZV11fZ4WWSEFMTk5NS0xOZW96eXJva2hpaGZhWVRRUlFOTExMS05ST3GLKyxVVEtQU1NTUWFiY2NCiqt/iJqXm6GdnZ2bAAAAAAAAAAAAAAAAACW0mD9KVVRUVV1eVk1RSUVESUpHR0ZFREdJSEVBWVtUVlVVV1RPUVRXWVdhdXFyaFpjalZMVFxIVl9FZFk9VEtRSEtbW1RUaYOcjzpBSEZHRklLWWF1hH93aGBlZmlhXVVSUk9OTUxMTExJUW6CIDhXRlBTUVJTVF5fY0N1r3Z1ipSSk5aWl5aWAAAAAAAAAAAAAAAAAD28hzFUWVRTV1xfVkpQTERER0dGRkZFRUhIRkdOX1ZUVFRVWFRSVVZYXF9kcHFydWZXYGRkVDcsRGxHTVFRXUpOSkldWlZfZnWMqWk3SUZHR0lHUV1sh4qAb3NqZmhpalVSU05OTkxMTExMUXF6JEVJSktUTE1LUFdWQGujamp+g4mRlpWWl5WWAAAAAAAAAAAAAAAAAGK7fzlTWFZUVlpaVU9SS0RERUZFRUVFRUlJRklSWFNVVFRUVVRVV1dYXWNqbnFwc3d0d4dqSj8uX3liY19fdEpRTUpWWVpfYH+NkX1GTkZJRkhHWFdgdIaEb3FtZmRlZVpTUU5OTkxMTE5JVnJ5LDxIRkdJSUlNVFpHX7Voand+eYCUl5aWlZSV"};
+function asciiPortrait(cv, mode) {
+  var D = ASCII_DATA, cols = D.cols, rows = D.rows, raw = atob(D.b64), N = cols * rows, V = new Uint8Array(N);
+  for (var i = 0; i < N; i++) V[i] = raw.charCodeAt(i);
+  if (!cv) return;
+  var inView = false;
+  var cx = cv.getContext('2d');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var RAMP = ' .:-=+*#%@', GLY = '01<>/{}[]#$%&*+=?;:~^';
+  var INK = '237,235,230', ACC = '255,106,43';
+  var cw = 0, chh = 0, curG = new Array(N), curK = new Array(N);
+  var reveal = new Float32Array(N), maxReveal = 0;
+  for (i = 0; i < N; i++) { var r = (i / cols) | 0, c = i % cols;
+    reveal[i] = 250 + r / rows * 1150 + Math.random() * 380 + Math.abs(c - cols / 2) / cols * 200; if (reveal[i] > maxReveal) maxReveal = reveal[i]; }
+  function baseOf(i) { var v = V[i]; if (!v) return null; var k = v / 255; return [RAMP.charAt(Math.max(1, Math.min(9, Math.round(k * 9)))), 0.2 + 0.8 * k]; }
+  function put(i, g, a, acc) {
+    var key = g ? (acc ? 'A' : 'I') + Math.round(a * 12) : '';
+    if (curG[i] === g && curK[i] === key) return;
+    curG[i] = g; curK[i] = key;
+    var x = (i % cols) * cw, y = ((i / cols) | 0) * chh;
+    cx.clearRect(x - 0.5, y - 0.5, cw + 1, chh + 1);
+    if (g) { cx.fillStyle = 'rgba(' + (acc ? ACC : INK) + ',' + (Math.round(a * 12) / 12) + ')'; cx.fillText(g, x, y); }
+  }
+  function rnd() { return GLY.charAt((Math.random() * GLY.length) | 0); }
+  var STACK = matchMedia('(max-width: 760px), (orientation: portrait) and (max-width: 1100px)');
+  function size() {
+    cv.style.width = ''; cv.style.height = '';
+    var h = cv.clientHeight || innerHeight * 0.88, ratio = cols * 0.55 / rows;
+    // never wider than its share of the screen, on any device
+    var maxW = innerWidth * (STACK.matches ? (mode === 'hero' ? 0.94 : 0.9) : (mode === 'hero' ? 0.56 : 0.46));
+    if (h * ratio > maxW) { h = maxW / ratio; cv.style.height = h + 'px'; }
+    chh = h / rows; cw = chh * 0.55;
+    var w = cw * cols, dpr = Math.min(2, devicePixelRatio || 1);
+    cv.style.width = w + 'px'; cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+    cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cx.font = '700 ' + (chh * 1.08).toFixed(2) + 'px ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace';
+    cx.textBaseline = 'top';
+    for (var j = 0; j < N; j++) { curG[j] = undefined; curK[j] = undefined; }
+    dirtyAll = true; wake();
+  }
+  var t0 = -1, introDone = reduce, dirtyAll = true, px = -1e4, py = -1e4, hot = [], scanT = -1, nextScan = 0, running = false;
+  function heroVisible() { return mode === 'hero' ? scrollY < innerHeight * 1.6 : inView; }
+  function frame(t) {
+    running = false;
+    if (!heroVisible() && introDone) { dirtyAll = true; return; }
+    if (t0 < 0) t0 = t;
+    var el = t - t0, busy = false, j, b;
+    if (!introDone) {
+      busy = true;
+      for (j = 0; j < N; j++) {
+        if (!V[j]) continue;
+        if (el < reveal[j]) put(j, '', 0, false);
+        else if (el < reveal[j] + 240) put(j, rnd(), 0.9, true);
+        else { b = baseOf(j); put(j, b[0], b[1], false); }
+      }
+      if (el > maxReveal + 260) { introDone = true; nextScan = t + 4500; dirtyAll = false; }
+    } else if (dirtyAll) {
+      for (j = 0; j < N; j++) { b = baseOf(j); if (b) put(j, b[0], b[1], false); else put(j, '', 0, false); }
+      dirtyAll = false;
+    }
+    // restore cells the cursor or scan touched last frame
+    var prevHot = hot; hot = [];
+    // LiDAR scan band, every few seconds
+    if (introDone && !reduce) {
+      if (scanT < 0 && t > nextScan) scanT = t;
+      if (scanT >= 0) {
+        busy = true;
+        var sp = (t - scanT) / 1500, row = sp * (rows + 6) - 3;
+        if (sp >= 1) { scanT = -1; nextScan = t + 6500; }
+        else for (var rr = Math.max(0, Math.floor(row - 3)); rr <= Math.min(rows - 1, Math.floor(row)); rr++)
+          for (var cc = 0; cc < cols; cc++) { j = rr * cols + cc; if (!V[j]) continue; b = baseOf(j);
+            var f = 1 - (row - rr) / 3.5; put(j, rr === Math.floor(row) && Math.random() < 0.35 ? rnd() : b[0], Math.min(1, b[1] + 0.35 * f), f > 0.45); hot.push(j); }
+      }
+    }
+    // cursor: characters near the pointer scramble to symbols
+    if (introDone && fine && !reduce) {
+      var R = 64, r0 = Math.max(0, Math.floor((py - R) / chh)), r1 = Math.min(rows - 1, Math.floor((py + R) / chh));
+      var c0 = Math.max(0, Math.floor((px - R) / cw)), c1 = Math.min(cols - 1, Math.floor((px + R) / cw));
+      for (var ry = r0; ry <= r1; ry++) for (var rx = c0; rx <= c1; rx++) {
+        j = ry * cols + rx; if (!V[j]) continue;
+        var d = Math.hypot((rx + 0.5) * cw - px, (ry + 0.5) * chh - py) / R; if (d > 1) continue;
+        b = baseOf(j); busy = true;
+        if (Math.random() < 0.55 * (1 - d)) put(j, rnd(), Math.min(1, b[1] + 0.4 * (1 - d)), true); else put(j, b[0], Math.min(1, b[1] + 0.3 * (1 - d)), d < 0.5);
+        hot.push(j);
+      }
+    }
+    var keep = {}; for (j = 0; j < hot.length; j++) keep[hot[j]] = 1;
+    for (j = 0; j < prevHot.length; j++) { var q = prevHot[j]; if (!keep[q]) { b = baseOf(q); put(q, b[0], b[1], false); } }
+    if (busy || hot.length || (scanT < 0 && introDone && !reduce)) schedule(busy || hot.length ? 0 : Math.max(16, nextScan - t));
+  }
+  var timer = 0;
+  function schedule(delay) { if (running) return; if (delay > 40) { clearTimeout(timer); timer = setTimeout(wake, delay); return; } running = true; requestAnimationFrame(frame); }
+  function wake() { if (!running) { running = true; requestAnimationFrame(frame); } }
+  if (fine && !reduce) cv.parentNode.addEventListener('pointermove', function (e) { var r = cv.getBoundingClientRect(); px = e.clientX - r.left; py = e.clientY - r.top; wake(); }, { passive: true });
+  addEventListener('pointerleave', function () { px = py = -1e4; wake(); });
+  addEventListener('scroll', function () { if (heroVisible()) wake(); }, { passive: true });
+  addEventListener('resize', size);
+  // start decoding just after the take-off begins (or at once when returning from a language switch)
+  var startDelay = document.documentElement.classList.contains('booting') ? 500 : 0;
+  if (reduce) { introDone = true; }
+  if (mode === 'hero') {
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(function () { setTimeout(size, startDelay); });
+  } else { // decode when it scrolls into view
+    var started = false;
+    new IntersectionObserver(function (es) {
+      inView = es[0].isIntersecting;
+      if (inView && !started) { started = true; size(); } else if (inView) wake();
+    }, { threshold: 0.25 }).observe(cv);
+  }
+}
+asciiPortrait(document.getElementById('ascii'), 'hero');
+asciiPortrait(document.getElementById('ascii2'), 'view');
+</script>
+<script defer src="assets/js/drone.js"></script>
+</body>
+</html>
